@@ -1,0 +1,57 @@
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+              <form [formGroup]="service.formModel" (submit)="onSubmit()">
+
+                <div class="mb-4">
+                  <div class="form-floating">
+                    <input id="userName" class="form-control" formControlName="UserName" placeholder="userName" />
+                    <label for="userName">UserName</label>
+                  </div>
+                  <div class="text-danger" *ngIf="service.formModel.get('UserName')?.touched && service.formModel.get('UserName')?.errors?.['required']">This field is mandatory.</div>
+                </div>
+                
+                <div class="mb-4">
+                  <div class="form-floating">
+                    <input id="emailAddress" class="form-control" formControlName="Email" placeholder="emailAddress" />
+                    <label class="form-label" for="emailAddress">Email</label>
+                  </div>
+                  <div class="text-danger" *ngIf="service.formModel.get('Email')?.touched && service.formModel.get('Email')?.errors?.['email']">Invalid email address.</div>
+                </div>
+
+                <div formGroupName="Passwords">
+                  <div class="mb-4">
+                    <div class="form-floating">
+                      <input type="password" id="password" class="form-control" formControlName="Password" placeholder="password" />
+                      <label class="form-label" for="password">Password</label>
+                    </div>
+                    <div class="text-danger" *ngIf="service.formModel.get('Passwords.Password')?.touched && service.formModel.get('Passwords.Password')?.errors?.['required']">This field is mandatory.</div>
+                    <div class="text-danger" *ngIf="service.formModel.get('Passwords.Password')?.touched && service.formModel.get('Passwords.Password')?.errors?.['minlength']">Minimum 4 characters required.</div>
+                  </div>
+                  
+                  <div class="mb-4">
+                    <div class="form-floating">
+                      <input type="password" id="confirmPassword" class="form-control" formControlName="ConfirmPassword" placeholder="confirmPassword" />
+                      <label class="form-label" for="confirmPassword">Confirm password</label>
+                    </div>
+                    <div class="text-danger" *ngIf="service.formModel.get('Passwords.ConfirmPassword')?.touched && service.formModel.get('Passwords.ConfirmPassword')?.errors?.['required']">This field is mandatory.</div>
+                    <div class="text-danger" *ngIf="service.formModel.get('Passwords.ConfirmPassword')?.touched && service.formModel.get('Passwords.ConfirmPassword')?.errors?.['passwordMismatch']">Confirm Password does not match..</div>
+                  </div>
+
+                </div>
+
+                <div class="mt-4 pt-2 d-flex align-items-center justify-content-center">
+                  <button class="btn btn-primary btn-lg" type="submit" [disabled]="!service.formModel.valid">Sign Up</button>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

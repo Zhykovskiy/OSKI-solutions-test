@@ -1,8 +1,9 @@
-﻿namespace API.Entities
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace API.Entities
 {
-    public class AppUser
+    public class AppUser : IdentityUser
     {
-        public int Id { get; set; }
-        public string? UserName { get; set; }
+        //Maybe i'll need some extra fields
     }
 }
