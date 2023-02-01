@@ -1,4 +1,27 @@
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand text-white ms-4">OSKI Solutions Test</a>
-    <button class="btn btn-danger me-4 my-sm-0" (click)="onLogout()">Logout</button>
-</nav>
+<ul class="list-group w-25 p-3">
+    <li *ngFor="let test of tests" class="list-group-item list-group-item-action">
+        {{test.name}}
+        <button type="button" class="btn btn-success btn-sm float-end" (click)="openModal(testModal, test)">Start</button>
+    </li>
+</ul>
+
+<ng-template #testModal let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">{{openedTest.name}}</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+	<div class="modal-body">
+    <div class="mb-3">
+      <div class="input-group">
+        {{openedTest.description}}
+      </div>
+    </div>
+	</div>
+	<div class="modal-footer">
+    <input class="form-check-input" type="checkbox" id="flexCheckDefault" [(ngModel)]="isAgreed">
+    <label class="form-check-label" for="flexCheckDefault">
+      I agree to start
+    </label>
+		<button type="button" class="btn btn-outline-dark" [disabled]="!isAgreed" (click)="proceed(openedTest.id)">Proceed</button>
+	</div>
+</ng-template>

@@ -22,12 +22,13 @@ namespace API.Controllers
         {
             return Ok(await _dbContext.Tests
                 .OrderBy(x => Guid.NewGuid())
+                .Take(5)
                 .ToListAsync());
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetTestById([FromRoute] int id)
+        public IActionResult GetTestById([FromRoute] int id)
         {
             var Test = _dbContext.Tests
                 .Include(x => x.Questions)
@@ -39,12 +40,27 @@ namespace API.Controllers
                     Questions = x.Questions.Select(q => new QuestionViewModel
                     {
                         Id = q.Id,
+                        Description = q.Description,
                         Options = new string[] { q.Option1, q.Option2, q.Option3, q.Option4 },
-                        Answer = q.Answer
                     }).ToList(),
-                });
+                })
+                .FirstOrDefault();
 
             return Ok(Test);
+        }
+
+        [HttpPost]
+        [Route("Answers")]
+        public IActionResult GetAnswers(int[] ids)
+        {
+            var answers = _dbContext.Questions
+                .AsEnumerable()
+                .Where(x => ids.Contains(x.Id))
+                .OrderBy(x => Array.IndexOf(ids, x.Id))
+                .Select(x => x.Answer)
+                .ToArray();
+
+            return Ok(answers);
         }
     }
 }
